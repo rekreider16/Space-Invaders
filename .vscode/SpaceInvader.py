@@ -18,12 +18,13 @@ pygame.init()
 gameDisplay = pygame.display.set_mode((windowWidth, windowHeight))
 pygame.display.set_caption('Space Invaders')
 
-titleFont = pygame.font.SysFont('Aurebesh Condensed', 30, False)
+titleFont = pygame.font.SysFont('Terminal', 40, False)
 
 clock = pygame.time.Clock()
 
 playerImg = pygame.image.load("si-player.gif")
 backgroundImg = pygame.image.load("si-background.gif")
+enemyImg = pygame.image.load("si-enemy.gif")
 
 class Player:
     xcor = 150
@@ -47,8 +48,25 @@ class Player:
     def stopMoving(self):
         self.direction = 0
 
+class Enemy:
+    xcor = 0
+    ycor = 0
+    speed = 1
+    direction = 1
+    def show(self):
+        self.xcor += self.direction * self.speed
+        gameDisplay.blit(enemyImg, (self.xcor, self.ycor))
+    def createEnemies():
+        for x in range(0, 5):
+            for y in range (0, 3):
+                newEnemy = Enemy()
+                newEnemy.xcor = gameSideMargin + gameBorderWidth + enemyImg.get_width() * x
+                newEnemy.ycor = gameTopMargin + gameBorderWidth + enemyImg.get_height() * y
+                newEnemies.append(newEnemy)
+        return newEnemies
 
 player = Player()
+enemies = Enemy.createEnemies()
 
 isAlive = True
 while isAlive:
