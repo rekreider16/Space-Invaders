@@ -266,3 +266,38 @@ while player.isAlive:
 
     clock.tick(60)
     pygame.display.update()
+
+showEndScreen = True
+while showEndScreen:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            showEndScreen = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                showEndScreen = False
+
+    gameDisplay.blit(gameDisplay, (0, 0))
+    gameDisplay.fill(black)
+
+    gameWidth = wallRight - wallLeft
+    gameHeight = wallBottom - wallTop
+
+    # Draw a white rectangle with the background image just inside of it to create the game border
+    pygame.draw.rect(gameDisplay, white, (gameSideMargin, gameTopMargin, windowWidth - gameSideMargin * 2, windowHeight - gameBottomMargin - gameTopMargin))                                 
+    gameDisplay.blit(backgroundImg, (wallLeft, wallTop), (0, 0, gameWidth, gameHeight))
+
+    titleText = titleFont.render('SPACE INVADERS', False, white)
+    gameOverText = titleFont.render('GAME OVER', False, red)
+    scoreText = titleFont.render('SCORE: ' + str(player.score), False, white)
+    gameDisplay.blit(titleText, (windowWidth / 2 - titleText.get_width() / 2, 0))
+    gameDisplay.blit(gameOverText, (windowWidth / 2 - gameOverText.get_width() / 2, 275))
+    gameDisplay.blit(scoreText, (windowWidth / 2 - scoreText.get_width() / 2, 325))
+
+    pygame.display.update()
+
+    clock.tick(60)
+
+
+pygame.quit()
